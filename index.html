@@ -1298,6 +1298,91 @@ body.has-cursor .cursor-ring { opacity: 0.55; }
   transform: translateY(0);
 }
 
+
+/* ============ SELECTED PLATING (AUTO-SCROLL MARQUEE) ============ */
+.plating {
+  padding: 140px 0 140px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.plating-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+.plating-head {
+  margin-bottom: 64px;
+  max-width: 760px;
+}
+.plating-marquee {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+.plating-track {
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  animation: plating-scroll 50s linear infinite;
+  padding: 8px 0;
+}
+.plating-marquee:hover .plating-track {
+  animation-play-state: paused;
+}
+.plating-tile {
+  width: 340px;
+  height: 340px;
+  flex: 0 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-alt);
+  cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+}
+.plating-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05);
+  transition: filter 0.5s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.plating-tile:hover {
+  transform: scale(1.06);
+  z-index: 2;
+  box-shadow: 0 30px 50px -20px rgba(26, 26, 26, 0.28);
+}
+.plating-tile:hover img {
+  filter: saturate(1.18);
+  transform: scale(1.04);
+}
+
+@keyframes plating-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (max-width: 900px) {
+  .plating { padding: 110px 0; }
+  .plating-inner { padding: 0 24px; }
+  .plating-head { margin-bottom: 44px; }
+  .plating-track { gap: 14px; animation-duration: 40s; }
+  .plating-tile { width: 240px; height: 240px; }
+}
+@media (max-width: 480px) {
+  .plating-tile { width: 200px; height: 200px; }
+  .plating-track { gap: 12px; animation-duration: 32s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plating-track { animation: none; }
+  .plating-marquee {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
 /* ============ HORIZONTAL SIGNATURE KITCHENS ============ */
 .properties {
   padding: 0;
@@ -1449,6 +1534,7 @@ body.has-cursor .cursor-ring { opacity: 0.55; }
     <a href="#about">About</a>
     <a href="#competencies">Core Competencies</a>
     <a href="#experience">Experience</a>
+    <a href="#plating">Plating</a>
     <a href="#certs">Certifications</a>
     <a href="#education">Education</a>
     <a href="#contact">Contact</a>
@@ -1464,6 +1550,7 @@ body.has-cursor .cursor-ring { opacity: 0.55; }
     <a href="#competencies" class="nav-ov-link">Core Competencies</a>
     <a href="#experience" class="nav-ov-link">Experience</a>
     <a href="#kitchens" class="nav-ov-link">Signature Kitchens</a>
+    <a href="#plating" class="nav-ov-link">Selected Plating</a>
     <a href="#certs" class="nav-ov-link">Certifications</a>
     <a href="#education" class="nav-ov-link">Education</a>
     <a href="#contact" class="nav-ov-link">Contact</a>
@@ -1657,7 +1744,7 @@ body.has-cursor .cursor-ring { opacity: 0.55; }
           Kitchens where <em>standard</em> is the starting line.
         </h2>
       </div>
-      <div class="prop-counter"><em id="propCurrent">01</em>/ 06</div>
+      <div class="prop-counter"><em id="propCurrent">01</em>/ 05</div>
       <div class="prop-hint">Scroll to advance</div>
       <div class="prop-track">
       <div class="prop-card reveal">
@@ -1695,18 +1782,42 @@ body.has-cursor .cursor-ring { opacity: 0.55; }
           <div class="prop-card-loc">Kathmandu · Nepal</div>
         </div>
       </div>
-      <div class="prop-card reveal reveal-delay-2">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80" alt="Namaste Restaurant & Bar" loading="lazy">
-        <div class="prop-card-info">
-          <div class="prop-card-name">Namaste Restaurant &amp; Bar</div>
-          <div class="prop-card-loc">Swayambhu · Nepal</div>
-        </div>
-      </div>
-      <div class="prop-end">Six kitchens. <em>One standard.</em></div>
+      <div class="prop-end">Five kitchens. <em>One standard.</em></div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- SELECTED PLATING -->
+<section class="plating" id="plating">
+  <div class="plating-inner">
+    <div class="plating-head reveal">
+      <div class="section-label"><span></span>Selected plating</div>
+      <h2 class="section-h">
+        Where <em>technique</em> meets the plate.
+      </h2>
+    </div>
+  </div>
+  <div class="plating-marquee reveal" aria-label="Plating gallery">
+    <div class="plating-track">
+      <div class="plating-tile"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=900&q=80" alt="Plated dish" loading="lazy"></div>
+      <div class="plating-tile"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&q=80" alt="Plated dish" loading="lazy"></div>
+      <div class="plating-tile"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=900&q=80" alt="Plated dish" loading="lazy"></div>
+      <div class="plating-tile"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Plated dish" loading="lazy"></div>
+      <div class="plating-tile"><img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=900&q=80" alt="Plated dish" loading="lazy"></div>
+      <div class="plating-tile"><img src="https://images.unsplash.com/photo-1607330289024-1535c6b4e1c1?w=900&q=80" alt="Plated dish" loading="lazy"></div>
+      <!-- duplicate set for seamless loop -->
+      <div class="plating-tile" aria-hidden="true"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=900&q=80" alt="" loading="lazy"></div>
+      <div class="plating-tile" aria-hidden="true"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&q=80" alt="" loading="lazy"></div>
+      <div class="plating-tile" aria-hidden="true"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=900&q=80" alt="" loading="lazy"></div>
+      <div class="plating-tile" aria-hidden="true"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="" loading="lazy"></div>
+      <div class="plating-tile" aria-hidden="true"><img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=900&q=80" alt="" loading="lazy"></div>
+      <div class="plating-tile" aria-hidden="true"><img src="https://images.unsplash.com/photo-1607330289024-1535c6b4e1c1?w=900&q=80" alt="" loading="lazy"></div>
+    </div>
+  </div>
+  </div>
+</section>
+
 
 <!-- CERTIFICATIONS -->
 <section class="certs" id="certs">
